@@ -1,0 +1,29 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+<% fields.forEach(function(field){ %>
+  <div>
+    <%_ if (field.component === 'TEXTFIELD') { -%>
+    <mat-form-field>
+        <mat-label><%= field.nameLabel %></mat-label>
+        <input matInput [formControl]="formControl<%= field.nameCapitalized%>"<% if (field.required === true) { %> placeholder="<%= field.placeholder %>"<% } %>>
+    </mat-form-field>
+    <%_ } -%>
+    <%_ if (field.component === 'TEXTAREA') { -%>
+    <mat-form-field>
+        <mat-label><%= field.nameLabel %></mat-label>
+        <textarea matInput [formControl]="formControl<%= field.nameCapitalized%>"<% if (field.required === true) { %> placeholder="<%= field.placeholder %>"<% } %>></textarea>
+    </mat-form-field>
+    <%_ } -%>
+    <%_ if (field.component === 'SELECT') { -%>
+    <mat-form-field>
+        <mat-label><%= field.nameLabel %></mat-label>
+        <mat-select>
+            <mat-option *ngFor="let option of options<%= field.nameCapitalized%>" [value]="option.value">
+                {{option.viewValue}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <%_ } -%>
+  </div>
+<% }) %>
+  <button type="submit" mat-flat-button color="primary" [disabled]="!formGroup.valid">Continue</button>
+</form>

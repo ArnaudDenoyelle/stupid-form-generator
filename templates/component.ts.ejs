@@ -1,0 +1,25 @@
+export class MyComponent implements OnInit {
+
+<%fields.forEach(function(field){ -%>
+<% if (field.component === 'SELECT') { -%>
+  options<%= field.nameCapitalized%>: {value: string, viewValue: string}[] = [];
+<% } -%>
+<% }) -%>
+
+<%fields.forEach(function(field){ -%>
+  formControl<%= field.nameCapitalized%> = new FormControl(undefined<% if (field.required === true) { %>, [Validators.required]<% } %>);
+<% }) -%>
+
+  formGroup = new FormGroup({
+<% fields.forEach(function(field){ -%>
+    '<%= field.nameCamelCase%>': this.formControl<%= field.nameCapitalized%>,
+<% }) -%>
+  });
+
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {}
+
+  onSubmit(): void {}
+
+}
